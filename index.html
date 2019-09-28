@@ -7,6 +7,15 @@
     <title>Birge Vieta</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.2.2/math.min.js" integrity="sha256-D/MkugLuxx4Xx0Kb92cUhpxlCMhUvQ0eOtEL8Ol23jM=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        #frame {
+            width: 100%;
+            max-height: 300px;
+        }
+        #cargando {
+            display: none;
+        }
+    </style>
 </head>
 <body>
         <input type="file" accept="image/*" capture="camera" id="camera">
@@ -14,6 +23,9 @@
         <p id="informacion">
 
         </p>
+        <h2 id="cargando">
+            Cargando...
+        </h2>
         <h2 id="latex">
 
         </h2>
@@ -22,6 +34,8 @@
           var frame = document.getElementById('frame');
           var myinfo = document.getElementById('informacion');
           var latex = document.getElementById('latex');
+          var cargando = document.getElementById('cargando');
+
 
           const toBase64 = file => new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -31,6 +45,7 @@
         });
         
           camera.addEventListener('change', async function(e) {
+            cargando.style.display = 'block'
             var file = e.target.files[0]; 
             // Do something with the image file.
             frame.src = URL.createObjectURL(file);
@@ -38,7 +53,7 @@
             myinfo.innerText = file.type
             let resBase64 = await toBase64(file)
             console.log(resBase64)
-
+            
             mathpix(resBase64)
 
           });
@@ -68,8 +83,12 @@
             }
         }).then(res => {
             console.log("Respuesta", res)
+            cargando.style.display = 'none'
             let { data: { latex_simplified: latexString } } = res
             latex.innerText = latexString
+            /*
+            Ejemplo: x ^ { 3 } - 4 x ^ { 2 } - 3 x - 10 = 0
+            */
         })
         .catch(err => console.log('Ocurrio un error', err))
         }
