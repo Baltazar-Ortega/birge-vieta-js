@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Birge Vieta</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.2.2/math.min.js" integrity="sha256-D/MkugLuxx4Xx0Kb92cUhpxlCMhUvQ0eOtEL8Ol23jM=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+        <input type="file" accept="image/*" capture="camera" id="camera">
+        <img id="frame">
+        <script>
+          var camera = document.getElementById('camera');
+          var frame = document.getElementById('frame');
+        
+          camera.addEventListener('change', function(e) {
+            var file = e.target.files[0]; 
+            // Do something with the image file.
+            frame.src = URL.createObjectURL(file);
+          });
+        </script>
+    <script>
+        /*let birge = math.evaluate('x^{4}-7 x^{3}+13 x^{2}+23 x-78=0')
+        console.log('Valor de square', birge)*/
+
+        const uri = 'https://api.mathpix.com/v3/latex'
+        axios({
+            method: 'post',
+            url: uri,
+            data: {
+                "src": "https://mathpix.com/images/ocr-page/formula_3.jpg",
+            "ocr": ["math", "text"], 
+            "skip_recrop": true,
+            "formats": [
+                "text",
+                "latex_simplified",
+                "latex_styled",
+            ]
+            },
+            headers:{
+                "content-type": "application/json",
+                "app_id": "kalbertog121_gmail_com",
+                "app_key": "c2aadddfff6ca123ba8f"
+            }
+        }).then(res => console.log('Todo bien', res))
+        .catch(err => console.log('Ocurrio un error', err))
+
+
+    </script>
+</body>
+</html>
