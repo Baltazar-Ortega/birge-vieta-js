@@ -14,29 +14,45 @@
         <p id="informacion">
 
         </p>
+        <h2 id="latex">
+
+        </h2>
         <script>
-          var camera = document.getElementById('camera');
+                var camera = document.getElementById('camera');
           var frame = document.getElementById('frame');
           var myinfo = document.getElementById('informacion');
+          var latex = document.getElementById('latex');
+
+          const toBase64 = file => new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+        });
         
-          camera.addEventListener('change', function(e) {
+          camera.addEventListener('change', async function(e) {
             var file = e.target.files[0]; 
             // Do something with the image file.
             frame.src = URL.createObjectURL(file);
             console.log('file', file)
             myinfo.innerText = file.type
+            let resBase64 = await toBase64(file)
+            console.log(resBase64)
+
+            mathpix(resBase64)
+
           });
-        </script>
-    <script>
+
         /*let birge = math.evaluate('x^{4}-7 x^{3}+13 x^{2}+23 x-78=0')
         console.log('Valor de square', birge)*/
-/*
-        const uri = 'https://api.mathpix.com/v3/latex'
+
+        function mathpix(base64Img){
+            const uri = 'https://api.mathpix.com/v3/latex'
         axios({
             method: 'post',
             url: uri,
             data: {
-                "src": "https://mathpix.com/images/ocr-page/formula_3.jpg",
+                "src": base64Img,
             "ocr": ["math", "text"], 
             "skip_recrop": true,
             "formats": [
@@ -50,9 +66,14 @@
                 "app_id": "kalbertog121_gmail_com",
                 "app_key": "c2aadddfff6ca123ba8f"
             }
-        }).then(res => console.log('Todo bien', res))
+        }).then(res => {
+            console.log("Respuesta", res)
+            let { data: { latex_simplified: latexString } } = res
+            latex.innerText = latexString
+        })
         .catch(err => console.log('Ocurrio un error', err))
-*/
+        }
+
 
     </script>
 </body>
