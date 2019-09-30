@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Birge Vieta</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.2.2/math.min.js" integrity="sha256-D/MkugLuxx4Xx0Kb92cUhpxlCMhUvQ0eOtEL8Ol23jM=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Analisis Numerico Proyecto 2</h1>
+        <h3>Alberto Baltazar Gutiérrez Ortega</h3>
+        <h2>Birge-Vieta</h2>
+    </header>
+
+    <main>
+        <h4>Instrucciones</h4>
+        <p>Hacer click en Seleccionar archivo y tomar foto de un polinomio de la forma adecuada para el metodo</p>
+        <p>Puede utilizar las imagenes de ejemplo haciendo click en ellas</p>
+    </main>
+        <div>
+            <h2>Ejemplos</h2>
+            <div class="contenedor-ejemplos">
+                <img class="img-ejemplo" id="ej-1" src="../ejemplos/uno.jpg">
+                <img class="img-ejemplo" id="ej-2" src="../ejemplos/dos.jpg">
+            </div>
+            
+        </div>
+        <h2>Mi polinomio</h2>
+        <input type="file" accept="image/*" capture="camera" id="camera">
+        <img id="frame">
+        <p id="informacion">
+        </p>
+        <h2 id="cargando">
+            Cargando...
+        </h2>
+        <h2 id="latex">
+
+        </h2>
+
+        <script src="app.js">
+        </script>
+</body>
+</html>

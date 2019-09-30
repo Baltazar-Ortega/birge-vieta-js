@@ -1,0 +1,22 @@
+#frame {
+            width: 100%;
+            max-height: 300px;
+        }
+        #cargando {
+            display: none;
+        }
+.img-ejemplo {
+	width: 100%;
+	height: 150px;
+}
+.contenedor-ejemplos {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1em;
+}
+
+@media (max-width: 512px) {
+	.contenedor-ejemplos {
+		grid-template-columns: 1fr;
+	}
+}
