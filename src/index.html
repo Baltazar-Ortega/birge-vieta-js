@@ -7,40 +7,48 @@
     <title>Birge Vieta</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.2.2/math.min.js" integrity="sha256-D/MkugLuxx4Xx0Kb92cUhpxlCMhUvQ0eOtEL8Ol23jM=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY=" crossorigin="anonymous" />
+<!--  
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+-->
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <header>
         <h1>Analisis Numerico Proyecto 2</h1>
-        <h3>Alberto Baltazar Gutiérrez Ortega</h3>
+        <h3>Alberto Baltazar Gutiérrez Ortega - 1887970</h3>
         <h2>Birge-Vieta</h2>
     </header>
 
     <main>
         <h4>Instrucciones</h4>
         <p>Hacer click en Seleccionar archivo y tomar foto de un polinomio de la forma adecuada para el metodo</p>
-        <p>Puede utilizar las imagenes de ejemplo haciendo click en ellas</p>
+        <p>Puede utilizar las imagenes de ejemplo haciendo click en alguna de ellas</p>
     </main>
         <div>
             <h2>Ejemplos</h2>
             <div class="contenedor-ejemplos">
                 <img class="img-ejemplo" id="ej-1" src="../ejemplos/uno.jpg">
                 <img class="img-ejemplo" id="ej-2" src="../ejemplos/dos.jpg">
+                <img class="img-ejemplo" id="ej-3" src="../ejemplos/profeEjemplo.jpg" alt="">
             </div>
             
         </div>
-        <h2>Mi polinomio</h2>
+        <h2 id="mi-polinomio">Mi polinomio</h2>
         <input type="file" accept="image/*" capture="camera" id="camera">
-        <img id="frame">
-        <p id="informacion">
-        </p>
+        
+        <img id="frame"> <!-- Tu foto -->
         <h2 id="cargando">
             Cargando...
         </h2>
+        <h3 id="tu-polinomio-titulo">Polinomio introducido</h3>
         <h2 id="latex">
-
         </h2>
-
+        <p id="error">
+           
+        </p>
+        <script src="base64Imagenes.js"></script>
         <script src="app.js">
         </script>
 </body>
