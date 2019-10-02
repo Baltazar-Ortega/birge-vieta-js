@@ -8,10 +8,6 @@
 #tu-polinomio-titulo {
 	display: none;
 }
-.img-ejemplo {
-	width: 100%;
-	height: 200px;
-}
 .contenedor-ejemplos {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -20,6 +16,12 @@
 	padding-right: 15px;
     padding-left: 15px;
 }
+
+.img-ejemplo {
+	width: 100%;
+	height: 200px;
+}
+
 
 #mi-polinomio {
 	margin-top: 30px;

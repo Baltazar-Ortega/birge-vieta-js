@@ -43,12 +43,7 @@ function mathpix(base64Img){
         el.removeEventListener('click', mandarAMathPix)
     })
     const uri = 'https://api.mathpix.com/v3/latex'
-    axios({
-            method: 'post',
-            url: uri,
-            data: {
-                "src": base64Img,
-            "ocr": ["math", "text"], 
+    axios({method: 'post', url: uri, data: {"src": base64Img, "ocr": ["math", "text"], 
             "skip_recrop": true,
             "formats": [
                 "text",
@@ -73,7 +68,7 @@ function mathpix(base64Img){
             </div>
         `
         console.log(latexString) // ej. x ^ { 3 } - 4 x ^ { 2 } - 3 x - 10 = 0
-
+        
         if (latexString === undefined) { // Se mandó una imagen que no es una ecuacion
             latex.innerHTML = mensajeError
             return
