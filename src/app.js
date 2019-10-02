@@ -1,7 +1,6 @@
 // Elementos del DOM
 var camera = document.getElementById('camera');
 var frame = document.getElementById('frame');
-var myinfo = document.getElementById('informacion');
 var latex = document.getElementById('latex');
 var tuPolinomioTitulo = document.getElementById('titulo-tu-polinomio')
 var cargando = document.getElementById('cargando');
