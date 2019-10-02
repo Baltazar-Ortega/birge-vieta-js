@@ -3,7 +3,7 @@ var camera = document.getElementById('camera');
 var frame = document.getElementById('frame');
 var myinfo = document.getElementById('informacion');
 var latex = document.getElementById('latex');
-var tuPolinomioTitulo = document.getElementById('tu-polinomio-titulo')
+var tuPolinomioTitulo = document.getElementById('titulo-tu-polinomio')
 var cargando = document.getElementById('cargando');
 var error = document.getElementById('error')
 var imagenesEjemplo = document.querySelectorAll('.img-ejemplo')
@@ -57,12 +57,13 @@ function mathpix(base64Img){
                 "app_key": "c2aadddfff6ca123ba8f"
             }
     }).then(res => {
+        console.log(res)
         cargando.style.display = 'none'
         let { data: { latex_simplified: latexString } } = res 
 
         let mensajeError = `
             <div>
-                <p class="error">El input es incorrecto</p>
+                <h3 class="error">El input es incorrecto</h3>
                 <p>Debe insertar un polinomio adecuado</p>
                 <p>Si quiere usar uno de los ejemplos, recargue la pagina</p>
             </div>
@@ -70,14 +71,16 @@ function mathpix(base64Img){
         console.log(latexString) // ej. x ^ { 3 } - 4 x ^ { 2 } - 3 x - 10 = 0
         
         if (latexString === undefined) { // Se mandó una imagen que no es una ecuacion
-            latex.innerHTML = mensajeError
+            error.style.display = 'block'
+            error.innerHTML = mensajeError
             return
         }
         let latexStringNoWhitespace = latexString.replace(/\s/g, "")
-        if (latexStringNoWhitespace.match(/^\W?\d*[x]/)) { // Determinar si la ecuacion tiene la forma correcta para el metodo
+        if (formaCorrecta(latexStringNoWhitespace)) { // Determinar si la ecuacion tiene la forma correcta para el metodo
             mostrarResultados(latexString, latexStringNoWhitespace)
         } else {
-            latex.innerHTML = mensajeError
+            error.style.display = 'block'
+            error.innerHTML = mensajeError
         }
     })
     .catch(err => {
@@ -89,7 +92,7 @@ function mathpix(base64Img){
 function mostrarResultados(latexString, latexStringNoWhitespace){
     scriptsMathJax(latexString) // Usar MathJax (ecuacion en estilo editorial)
                 
-    let datosLimpios = limpiarInput(latexStringNoWhitespace)
+    let datosLimpios = obtenerNumerosDeInput(latexStringNoWhitespace)
     let gradoPolinomio = datosLimpios.gradoPolinomio
     let coeficientes = datosLimpios.coeficientes
                 
@@ -108,12 +111,60 @@ function mostrarResultados(latexString, latexStringNoWhitespace){
     } else {
         raicesContainer.style.display = 'block'
         raicesContainer.innerHTML = `
-            <h4><strong>Error:</strong> ${respuesta.mensajeError}</h4>
+            <h4><strong style="color:red;">Error:</strong> ${respuesta.mensajeError}</h4>
         `
     }
 }
 
 // Funciones auxiliares
+function formaCorrecta(latex) {
+    let potenciasString = latex.match(/[x]\^{\d+}/g)
+    if(potenciasString){
+        let potencias = potenciasString.map(el => {
+           el = el.slice(0, -1) 
+           el = el.slice(3, el.length)
+           el = parseFloat(el)
+           return el
+        })
+        console.log("potencias", potencias)
+         
+        let mayor = 0
+        potencias.forEach(num => {
+            if (num > mayor){
+                mayor = num
+            }
+        })
+         if (mayor === potencias[0] && sonPotenciasConsecutivas(potencias)){
+            return true
+         } else if (mayor !== 0 || mayor === 0){
+            return false
+         }
+    } else {
+        return false
+    }
+    
+}
+
+function sonPotenciasConsecutivas(potencias){
+    let bandera = 0
+    let sigPotencia = potencias[0] - 1
+      
+    potencias.forEach(num => {
+        if (Number(num - 1) === Number(sigPotencia)){
+            sigPotencia--
+        } else {
+            bandera = 1
+            return
+        }
+    })
+    if (bandera === 0){
+        return true
+    }
+    else {
+        return false
+    }
+}
+
 function estilizarBorde(e){
     e.type === "mouseover" ? e.target.style.border = "3px dotted blue" : e.target.style.border = ""
 }
@@ -142,8 +193,14 @@ function mandarAMathPix(e) { // Mandar algun ejemplo a MathPix
     mathpix(base64Img)
 }
 
+function obtenerGradoPolinomio(latexString){
+    let potencias = latexString.match(/(\{\d+\})/g)
+    let potenciaRealPaso1 = potencias[0].slice(1) // Quitar {
+    let potenciaRealPasoFinal = potenciaRealPaso1.slice(0, potenciaRealPaso1.length - 1) // Quitar }
+    return potenciaRealPasoFinal
+}
 
-function limpiarInput(latexStringNoWhitespace) { 
+function obtenerNumerosDeInput(latexStringNoWhitespace) { 
     // ej. 9x^{5}-4x^{2}+3x-10=0
     let gradoPolinomio = obtenerGradoPolinomio(latexStringNoWhitespace)
 
@@ -165,13 +222,6 @@ function limpiarInput(latexStringNoWhitespace) {
         coeficientesFloat = coeficientes.map(el => parseFloat(el))
     }
     return { "gradoPolinomio": gradoPolinomio, "coeficientes": coeficientesFloat }
-}
-
-function obtenerGradoPolinomio(latexString){
-    let potencias = latexString.match(/(\{\d+\})/g)
-    let potenciaRealPaso1 = potencias[0].slice(1) // Quitar {
-    let potenciaRealPasoFinal = potenciaRealPaso1.slice(0, potenciaRealPaso1.length - 1) // Quitar }
-    return potenciaRealPasoFinal
 }
 
 function scriptsMathJax(latexString) {

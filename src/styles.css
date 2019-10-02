@@ -5,7 +5,7 @@
 #cargando {
             display: none;
 }
-#tu-polinomio-titulo {
+#titulo-tu-polinomio {
 	display: none;
 }
 .contenedor-ejemplos {
@@ -35,6 +35,9 @@
 	display: none;
 }
 
+#titulo-respuestas {
+	color: green;
+}
 
 #raices {
 	display: none;
