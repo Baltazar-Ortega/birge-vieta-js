@@ -30,8 +30,9 @@
 	display: none;
 }
 
-.error-contenedor {
-	background-color: lightgray;
+
+#raices {
+	display: none;
 }
 
 .error {
