@@ -168,13 +168,13 @@ function limpiarInput(latexStringNoWhitespace) {
     let coeficientesNum = []
 
     if (newlatex[0].localeCompare("x") === 0){ //0 significa si son iguales
-        coeficientes = newlatex.match(/([-]?\d)+/g)
+        coeficientes = newlatex.match(/([-]?\d+[.]?\d*)+/g)
         coeficientes.unshift("1")
         coeficientes.pop()
         console.log(coeficientes) // [ "1", "-4", "3", "-10" ]
         coeficientesNum = coeficientes.map(el => parseFloat(el))
     }else {
-        coeficientes = newlatex.match(/([-]?\d)+/g)
+        coeficientes = newlatex.match(/([-]?\d+[.]?\d*)+/g)
         coeficientes.pop()
         console.log(coeficientes) // [ "9", "-4", "3", "-10" ]
         coeficientesNum = coeficientes.map(el => parseFloat(el))
