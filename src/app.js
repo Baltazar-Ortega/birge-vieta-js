@@ -28,6 +28,7 @@ camera.addEventListener('change', async function(e) {
         el.removeEventListener('mouseleave', estilizarBorde)
     })
     latex.innerHTML = ""
+    camera.disabled = true
     mathpix(resBase64)
 });
 
