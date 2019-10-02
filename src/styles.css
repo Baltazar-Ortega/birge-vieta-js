@@ -15,8 +15,10 @@
 .contenedor-ejemplos {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	column-gap: 30px;
+	column-gap: 20px;
 	row-gap: 30px;
+	padding-right: 15px;
+    padding-left: 15px;
 }
 
 #mi-polinomio {

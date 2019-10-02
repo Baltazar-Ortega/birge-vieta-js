@@ -1,15 +1,3 @@
-// let gradoPolinomio = 3
-// let coeficientes = [1, -11, 32, -22]
-//let coeficientes = [1, -0.5, -8, 7.5]
-
-
-function obtenerValorInicial(coeficientes){
-  let xSubCero = coeficientes[coeficientes.length - 1]
-  let xSubUno = coeficientes[coeficientes.length - 2]
-  let aproximacion = -(xSubCero / xSubUno )
-  return aproximacion
-}
-
 
 function birgeVieta(gradoPolinomio, coeficientes){
 
@@ -84,4 +72,11 @@ function birgeVieta(gradoPolinomio, coeficientes){
   }
 }
 
+
+function obtenerValorInicial(coeficientes){
+  let xSubCero = coeficientes[coeficientes.length - 1]
+  let xSubUno = coeficientes[coeficientes.length - 2]
+  let aproximacion = -(xSubCero / xSubUno )
+  return aproximacion
+}
 
