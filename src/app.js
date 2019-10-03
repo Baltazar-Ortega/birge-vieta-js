@@ -56,10 +56,10 @@ function mathpix(base64Img){
                 "app_id": "kalbertog121_gmail_com",
                 "app_key": "c2aadddfff6ca123ba8f"
             }
-    }).then(res => {
-        console.log(res)
+    }).then(respuesta => {
+        console.log(respuesta)
         cargando.style.display = 'none'
-        let { data: { latex_simplified: latexString } } = res 
+        let { data: { latex_simplified: latexString } } = respuesta 
 
         let mensajeError = `
             <div>
@@ -83,8 +83,8 @@ function mathpix(base64Img){
             error.innerHTML = mensajeError
         }
     })
-    .catch(err => {
-        console.log('Ocurrio un error', err)
+    .catch(error => {
+        console.log('Ocurrio un error', error)
         error.innerHTML = `Ocurrio un error \n Descripcion: ${err} \n Se recargará la pagina`
     })
 }
@@ -204,24 +204,51 @@ function obtenerNumerosDeInput(latexStringNoWhitespace) {
     // ej. 9x^{5}-4x^{2}+3x-10=0
     let gradoPolinomio = obtenerGradoPolinomio(latexStringNoWhitespace)
 
-    let newlatex = latexStringNoWhitespace.replace(/(\^\{\d\})/g, "") // ej. 9x-4x+3x-10=0
+    let latexSoloConX = latexStringNoWhitespace.replace(/(\^\{\d\})/g, "") // ej. 9x-4x+3x-10=0
     let coeficientes = []
     let coeficientesFloat = []
 
-    if (newlatex[0].localeCompare("x") === 0){ // 0 significa que SI son iguales
+    if (latexSoloConX[0].localeCompare("x") === 0){ // 0 significa que SI son iguales
         // En este caso la ecuacion comienza con x (coeficiente 1)
-        coeficientes = newlatex.match(/([-]?\d+[.]?\d*)+/g) // Obtener coeficientes
+        let nuevoLatex = validarXCoeficienteUno(latexSoloConX)
+        coeficientes = nuevoLatex.match(/([-]?\d+[.]?\d*)/g) // Obtener coeficientes (solo numeros)
         coeficientes.unshift("1")
         coeficientes.pop()
         console.log(coeficientes) // ej. [ "1", "-4", "3", "-10" ]
         coeficientesFloat = coeficientes.map(el => parseFloat(el))
     }else {
-        coeficientes = newlatex.match(/([-]?\d+[.]?\d*)+/g)
+        console.log("NO comienza con x")
+        let nuevoLatex = validarXCoeficienteUno(latexSoloConX)
+        coeficientes = nuevoLatex.match(/([-]?\d+[.]?\d*)/g)
         coeficientes.pop()
         console.log(coeficientes) // ej. [ "9", "-4", "3", "-10" ]
         coeficientesFloat = coeficientes.map(el => parseFloat(el))
     }
     return { "gradoPolinomio": gradoPolinomio, "coeficientes": coeficientesFloat }
+}
+
+function validarXCoeficienteUno(latex){
+    function setCharAt(str,index,chr) {
+        if(index > str.length-1) return str;
+        return str.substr(0,index) + chr + 	str.substr(index+1);
+    }
+    let indicesConX = []
+    for(let i = 0; i < latex.length; i++){
+      if(i > 0){
+        if((latex[i-1] === "+" || latex[i-1] === "-") && latex[i] === "x"){
+        	indicesConX.push(i)
+        }
+      }
+    }
+    let copy = latex
+    for (let i = 0; i < latex.length; i++){
+      for(let j=0;j<indicesConX.length;j++){
+      	if(i === indicesConX[j]){
+        	copy = setCharAt(copy, i, "1")
+        }
+      }
+    }
+    return copy
 }
 
 function scriptsMathJax(latexString) {

@@ -1,5 +1,4 @@
 function birgeVieta(gradoPolinomio, coeficientes){
-
   function resultadoSuma(gradoPolinomio, r) {
     aux[0] = p[0]
     for (let i = 1; i <= gradoPolinomio; i++){
@@ -7,13 +6,11 @@ function birgeVieta(gradoPolinomio, coeficientes){
     }
     return aux[gradoPolinomio]
   }
-
   let raices = []
   let aux = coeficientes.slice(0); // Copiar array
   let p = aux.slice(0)
   let bandera = 0
   let banderaNumReales = 0
-
   for(let k= 0; k < gradoPolinomio;k++){
     let x = obtenerValorInicial(coeficientes)
     let controlNumReales = 0
@@ -39,7 +36,6 @@ function birgeVieta(gradoPolinomio, coeficientes){
           bandera = 1
         }
     } while (bandera != 1)
-
     if (banderaNumReales === 0) {
       raices.push(x)
       coeficientes = aux.slice(0)
@@ -47,9 +43,7 @@ function birgeVieta(gradoPolinomio, coeficientes){
       aux = coeficientes.slice(0)
       p = coeficientes.slice(0)
       bandera = 0
-    } else {
-      break
-    }
+    } else {break}
   }
   if (banderaNumReales === 0){
     return { raices, error: false }
