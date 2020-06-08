@@ -11,5 +11,6 @@
 
 ![imagen](https://user-images.githubusercontent.com/30305964/84067737-7cf2ef00-a98d-11ea-92b3-77f017c21f50.png)
 
-![imagen](https://user-images.githubusercontent.com/30305964/84067815-a57ae900-a98d-11ea-9a12-6afd43d4102e.png)
+
+![imagen](https://user-images.githubusercontent.com/30305964/84068401-803aaa80-a98e-11ea-88a4-844070b479cd.png)
 
